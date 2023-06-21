@@ -120,14 +120,7 @@
   /* width: 100%; */
 
 }
-.ant-table table{
-  /* width: auto; */
-}
-/* .ant-table-thead{
-  width: fit-content;
-  display: flex;
-  flex: 1;
-} */
+
 .empty_back {
   display: flex;
   flex-flow: column;
@@ -554,3 +547,4 @@ tr > th:last-child {
   font-weight: 600;
   padding-left: 10px;
 }
+

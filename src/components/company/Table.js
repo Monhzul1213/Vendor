@@ -252,7 +252,7 @@ const columns = [
   ]; 
 
   return <>
-  <AntTable columns={columns } dataSource={data}
+  <AntTable columns={columns } dataSource={data} className='table_scroll'
     pagination={{ defaultPageSize: 50, showSizeChanger: true, pageSizeOptions: ['50', '100', '150']}}  
     scroll={{ x: 'max-content', y: height - 260 , scrollToFirstRowOnChange: false
     }}

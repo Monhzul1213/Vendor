@@ -1,4 +1,5 @@
 import Frame from 'react-frame-component';
+// import { positive } from '../../assets';
 
 export function LoginScript(){
   return (
@@ -9,6 +10,7 @@ export function LoginScript(){
       overflow: 'hidden',
       background: 'transparent',
     }}>
+      {/* <img src={positive} className='xx'/> */}
       <Frame
         frameBorder={0}
         height={58}
