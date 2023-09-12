@@ -27,7 +27,6 @@ export function Company(){
     let users = []
     const userCollectionRef =collection(db, 'smVendorUsers')
     const q1 = query(userCollectionRef, where("CpnyID", "==", login.CpnyID));
-    console.log(login.CpnyID)
     await getDocs(q1)
     .then(response=>{
       response.docs.map(doc => {
@@ -39,7 +38,7 @@ export function Company(){
       setOriginalData(users)
       return Promise.resolve(setData(users))
      }
-     ).catch(error=> console.log(error.message))
+     ).catch(error=> error.message)
 }
 
 useEffect(() => {
@@ -54,7 +53,6 @@ const onClose = toLoad => {
     }
   }
 const changeVendID = value => {
-    console.log(value);
     setVendID(value);
     let newData = originaldata?.filter(word => word.VendID.toLowerCase().includes(VendID.toLowerCase()) ) 
     setData(newData)

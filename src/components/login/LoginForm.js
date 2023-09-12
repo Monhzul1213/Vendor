@@ -23,14 +23,12 @@ export default function LoginForm(){
     setError(null);
     const res = await getUser(email?.toLowerCase()
     , password?.trim());
-    console.log(email?.trim().toLowerCase()) 
     if(res?.error){
       setError(res?.error);
       setLoading(false);
     } else {
 
       dispatch(login(res.webUser))
-      // console.log(res.webUser)
       
     }
   }

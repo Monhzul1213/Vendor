@@ -2,11 +2,11 @@ import React, { useEffect, useState, } from 'react';
 import { Modal, message } from 'antd';
 import { useTranslation } from 'react-i18next';
 import moment from 'moment';
-import {addDoc, collection , doc, setDoc, query, where, getDocs} from 'firebase/firestore';
-import {db} from '../../firebase'
+import { addDoc, collection , doc, setDoc, query, where, getDocs} from 'firebase/firestore';
+import { db } from '../../firebase'
 import '../../css/card.css';
-import{Cardlength, CardDate, CardInput, CardInput1,CardNote,Loader,DynamicAIIcon,Error1, Check} from '../all';
-import  {useSelector} from 'react-redux'
+import { Cardlength, CardDate, CardInput, CardInput1,CardNote,Loader,DynamicAIIcon,Error1, Check, Check1, Check2} from '../all';
+import { useSelector } from 'react-redux'
 
 export function Card(props){
   const login = useSelector(state => state.login?.user);
@@ -23,6 +23,8 @@ export function Card(props){
   const [VendID, setVendID] = useState({ value: '', error: null });
   const [VendName, setVendName] = useState({ value: '', error: null });
   const [UseLicenseDate, setUseLicenseDate] = useState({ value: '', error: null })
+  const [Info, setInfo] = useState({ value: '', error: null });
+  const [Inventory, setInventory] = useState({ value: '', error: null });
   const [LicenseExpireDate, setLicenseExpireDate] = useState({ value: '', error: null });
   const [Address, setAddress] = useState({ value: '', error: null });
   const [Phone, setPhone] = useState({ value: '', error: null });
@@ -40,6 +42,8 @@ export function Card(props){
     setVendPass({ value: selected?.VendPass ?? '' });
     setVendID({ value: selected?.VendID ?? '' });
     setUseLicenseDate(selected?.UseLicenseDate ?? 'Y');
+    setInfo(selected?.Info ?? 'Y');
+    setInventory(selected?.Inventory ?? 'Y');
     setLicenseExpireDate({ value: selected?.LicenseExpireDate ? moment(selected?.LicenseExpireDate, 'yyyy.MM.DD') : null });
     setAddress({ value: selected?.Address ?? '' });
     setPhone({ value: selected?.Phone ?? '' });
@@ -67,17 +71,20 @@ async function handleSubmit(e){
       VendID:VendID?.value, 
       VendName:VendName?.value, 
       UseLicenseDate: UseLicenseDate , 
+      Info: Info,
+      Inventory: Inventory,
       Address: Address?.value, 
-      Phone:Phone?.value, 
-      Bank1:Bank1?.value, 
-      Bank2:Bank2?.value ,
+      Phone: Phone?.value, 
+      Bank1: Bank1?.value, 
+      Bank2: Bank2?.value ,
       IsFirst: IsFirst?.value, 
-      Email:Email?.value,  
+      Email: Email?.value,  
       LastUserName: VendName?.value,
       CreatedDate:  CreatedDate?.value,
       LastUpdate:  moment().format('yyyy.MM.DD, HH:mm:ss'),    
       LicenseExpireDate: LicenseExpireDate?.value,
       } 
+    console.log(obj)
     if(selected){
         const userRef= doc(db, 'smVendorUsers', selected.id)
           if(LicenseExpireDate?.value === null){
@@ -90,27 +97,21 @@ async function handleSubmit(e){
         onClose(true);
         message.success(t('request_success'));
     } else {
-        let exists = [];
-        const userCollRef= collection(db, 'smVendorUsers')
-        const q1 = query(userCollRef, where("VendUserID", "==", VendUserID?.value?.trim() ));
-        const response = await getDocs(q1);
-        response.docs.forEach(doc => {
-            let user = (doc.data());
-            exists.push(user.CpnyID)
-           })
-        let isVal = exists.includes(CpnyID?.value)
-        if(isVal){
-          setError("Хэрэглэгч бүртгэлтэй байна")
-        }  
-        else {
-          obj.CreatedDate = moment().format('yyyy.MM.DD, HH:mm:ss')
-          if(LicenseExpireDate?.value === null){
-            addDoc(userCollRef, obj)
-          }
-          else {
-            obj.LicenseExpireDate = LicenseExpireDate?.value?.format('yyyy.MM.DD')
-            addDoc(userCollRef, obj  ) 
-            }
+      const userCollRef= collection(db, 'smVendorUsers')
+      const q1 = query(userCollRef, where("VendUserID", "==", VendUserID?.value))
+      const query1 = await getDocs(q1)
+      let exists = null;
+      query1.forEach(doc => exists = doc.data());
+      if(exists) setError("Хэрэглэгч бүртгэлтэй байна")
+      else {
+       obj.CreatedDate = moment().format('yyyy.MM.DD, HH:mm:ss')
+      if(LicenseExpireDate?.value === null){
+        addDoc(userCollRef, obj)
+      }
+      else {
+        obj.LicenseExpireDate = LicenseExpireDate?.value?.format('yyyy.MM.DD')
+        addDoc(userCollRef, obj  ) 
+        }
         onClose(true);
         message.success(t('request_success'))
         }
@@ -184,6 +185,10 @@ const handleEnter = e => {
           <div className='card1'>
             <Check label={('table.uselicensedate')}  value={UseLicenseDate} setValue={setUseLicenseDate}/>
             {!disabled && <CardDate label={('table.licenseExpireDate')} value={LicenseExpireDate} setValue={setLicenseExpireDate} disabled={(UseLicenseDate === 'Y') ? false : true} />}
+          </div>
+          <div className='card1'>
+            <Check1 label={('table.info')}  value={Info} setValue={setInfo}/>
+            <Check2 label={('table.inventory')}  value={Inventory} setValue={setInventory}/>
           </div>
       </div>
       {!disabled && <button type='submit' disabled={loader} className='login_form_btn'>

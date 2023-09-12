@@ -118,7 +118,9 @@
     "bankacct":"Information of bank 2",
     "vendorname": "Vendor name",
     "vendorcode":"Vendor code",
-    "company_name": "Company name"
+    "company_name": "Company name",
+    "info": "Sales Information",
+    "inventory": "Inventory stock"
 
   },
   "filter": {
@@ -202,5 +204,7 @@
   "change": "Change password",
   "pass_match": "The password confirmation does not match",
   "pass_success": "Your password has been updated successfully.",
-  "guide": "User guide"
+  "guide": "User guide",
+  "yes": "See",
+  "no": "No See"
 }

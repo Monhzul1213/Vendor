@@ -34,7 +34,6 @@ export default function LoginNew(){
     if(user?.WebUserID) setEmail(user?.WebUserID);
     if(toRemember && user?.WebPassword) setPassword(user?.WebPassword);
     if(toRemember) setChecked(true);
-    console.log(user)
     return () => {};
   }, []);
 
@@ -62,7 +61,6 @@ const handleEnter = e => {
     setError(null);
     const res = await getUser(email?.toLowerCase()
     , password?.trim());
-    console.log(res.webUser) 
     if(res?.error){
       setError(res?.error);
       setLoading(false);
