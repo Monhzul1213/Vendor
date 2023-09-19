@@ -22,8 +22,8 @@ export const config1 = {//test
       appId: "1:38110257902:web:5f825e30bf2f2d6e0309ff",
       measurementId: "G-4QZQVDV9XH"
     },
-    api_url: "http://192.168.1.219:8082/",
-    // api_url: "http://202.131.232.101:3737/VendorSystem.asmx/",
+    // api_url: "http://192.168.1.219:8082/",
+    api_url: "http://202.131.232.101:3737/VendorSystem.asmx/",
     version: "",
     domain: "http://vendor.ultimate.mn/admin",
   }
