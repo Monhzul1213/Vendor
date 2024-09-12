@@ -859,3 +859,16 @@ ol ol > li:before {
   font-weight: 550;
   margin: 5px 0 0 0;
 }
+
+#image_back{
+  width: 100px;
+  height: 0;
+}
+.loginscript_back{  
+  display: flex;
+
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  overflow: hidden;
+}

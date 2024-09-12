@@ -1,7 +1,10 @@
-import Frame from 'react-frame-component';
-// import { positive } from '../../assets';
+import React from 'react';
+import { positive } from '../../assets';
 
 export function LoginScript(){
+
+  const onClick = () => { window.open('https://www.trustlogo.com/ttb_searcher/trustlogo?v_querytype=W&v_shortname=POSDV&v_search=about://srcdoc&x=6&y=5')}
+
   return (
     <div style={{
       position: 'absolute',
@@ -10,8 +13,8 @@ export function LoginScript(){
       overflow: 'hidden',
       background: 'transparent',
     }}>
-      {/* <img src={positive} className='xx'/> */}
-      <Frame
+      <img src={positive} alt='positive' className='xx' onClick={onClick}/>
+      {/* <Frame
         frameBorder={0}
         height={58}
         width={185}
@@ -34,7 +37,7 @@ export function LoginScript(){
           </html>`
         }
         mountTarget='#mountHere'>
-      </Frame>
+      </Frame> */}
     </div>
   );
 }

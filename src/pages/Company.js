@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Filter, Table,Card ,Header} from '../components/company';
-import {collection, doc, getDocs, query, where} from 'firebase/firestore'
-import {db} from '../firebase'
-import { useSelector, useDispatch } from 'react-redux';
-import{Empty, Error} from '../components/all'
+import {collection, getDocs, query, where} from 'firebase/firestore'
+import { useSelector } from 'react-redux';
+
+import { db} from '../firebase'
+import { Empty} from '../components/all'
 import { useDimensions } from '../helpers/useDimensions';
+import { Filter, Table,Card ,Header} from '../components/company';
 import '../css/list.css'
 
 export function Company(){
@@ -25,13 +26,12 @@ export function Company(){
 
  async function getUser(){
     let users = []
-    const userCollectionRef =collection(db, 'smVendorUsers')
+    const userCollectionRef = collection(db, 'smVendorUsers')
     const q1 = query(userCollectionRef, where("CpnyID", "==", login.CpnyID));
     await getDocs(q1)
     .then(response=>{
-      response.docs.map(doc => {
+      response.docs.forEach(doc => {
         let user = {...doc.data(), ...{ id: doc?.id }};
-        // console.log(user)
         users.push(user);
       })
       setData(users)
@@ -44,6 +44,7 @@ export function Company(){
 useEffect(() => {
     getUser();  
     return () => {};
+   // eslint-disable-next-line react-hooks/exhaustive-deps
 }, [])
 
 const onClose = toLoad => {
@@ -59,7 +60,7 @@ const changeVendID = value => {
 }
 
 let cardProps = { visible, setVisible, selected, setSelected,  setData,  VendID, setVendID: changeVendID  };
-let filterProps = { addRequest,   setError, setData , setVisible ,VendID, setVendID: changeVendID };
+let filterProps = { addRequest, error, setError, setData , setVisible ,VendID, setVendID: changeVendID };
   return (
       <>
         <Header/>
